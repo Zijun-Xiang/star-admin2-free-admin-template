@@ -9,13 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('owns', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('owner_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('pet_id')->constrained()->cascadeOnDelete();
-            $table->date('acquired_at')->nullable();
+            $table->unsignedBigInteger('PetID');
+            $table->integer('Year');
+            $table->unsignedBigInteger('OID');
+            $table->integer('PetAgeatOwnership')->nullable();
+            $table->decimal('PricePaid', 10, 2)->nullable();
             $table->timestamps();
 
-            $table->unique(['owner_id', 'pet_id']);
+            $table->primary(['PetID', 'Year', 'OID']);
+            $table->foreign('PetID')->references('PetID')->on('pets')->onDelete('cascade');
+            $table->foreign('OID')->references('OID')->on('owners')->onDelete('cascade');
         });
     }
 

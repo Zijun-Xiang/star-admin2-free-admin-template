@@ -9,9 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('owners', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
+            $table->bigIncrements('OID');
+            $table->string('LastName');
+            $table->string('Street')->nullable();
+            $table->string('City')->nullable();
+            $table->string('ZipCode', 10)->nullable();
+            $table->string('State', 50)->nullable();
+            $table->integer('Age')->nullable();
+            $table->decimal('AnnualIncome', 10, 2)->nullable();
             $table->timestamps();
         });
     }

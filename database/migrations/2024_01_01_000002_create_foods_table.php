@@ -9,9 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('foods', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('category')->nullable();
+            $table->bigIncrements('FoodID');
+            $table->string('Name');
+            $table->string('Brand')->nullable();
+            $table->string('TypeofFood')->nullable();
+            $table->decimal('Price', 10, 2)->nullable();
+            $table->decimal('ItemWeight', 8, 2)->nullable();
+            $table->string('ClassofFood')->nullable();
             $table->timestamps();
         });
     }
