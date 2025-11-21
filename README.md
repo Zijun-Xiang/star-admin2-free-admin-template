@@ -53,3 +53,41 @@ After Gulp has been installed, follow the steps below to contribute.
 	5 - Submit a pull request
   <hr>
 Do you need a template with more features and functionalities? Check out the premium version of Star Admin 2! Visit <a href="https://www.bootstrapdash.com" target="_blank">https://www.bootstrapdash.com</a> for more admin templates.
+
+<h2>Use Star Admin 2 in a Laravel project</h2>
+
+If you want to plug the free template into a Laravel app, the steps below mirror a typical setup flow:
+
+0.1 Create a project (or switch into an existing one)
+
+```bash
+laravel new petsapp
+cd petsapp
+```
+
+0.2 Install dependencies
+
+```bash
+composer install
+npm install # Skip if you do not need a front-end build
+```
+
+0.3 Clone your fork of Star Admin 2 inside the Laravel project
+
+```bash
+git clone https://github.com/your-github-username/star-admin2-free-admin-template.git theme
+```
+
+0.4 Copy the template assets into Laravel's public folder
+
+```bash
+cp -R theme/template/assets public/assets
+```
+
+0.5 Create view directories for your pages
+
+```bash
+mkdir -p resources/views/layouts resources/views/pets resources/views/owners resources/views/owns resources/views/foods resources/views/purchases
+```
+
+From here you can build Blade layouts that pull in the copied assets to render the dashboard inside Laravel.
