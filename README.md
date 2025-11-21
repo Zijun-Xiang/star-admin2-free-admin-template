@@ -90,4 +90,26 @@ cp -R theme/template/assets public/assets
 mkdir -p resources/views/layouts resources/views/pets resources/views/owners resources/views/owns resources/views/foods resources/views/purchases
 ```
 
+0.6 Register the routes that point to your controllers
+
+Add a resourceful route set to `routes/web.php` so the dashboard pages can be rendered through Laravel:
+
+```php
+use App\Http\Controllers\PetController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\OwnController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\PurchaseController;
+
+Route::get('/', function () {
+    return redirect()->route('pets.index');
+});
+
+Route::resource('pets', PetController::class);
+Route::resource('owners', OwnerController::class);
+Route::resource('owns', OwnController::class);
+Route::resource('foods', FoodController::class);
+Route::resource('purchases', PurchaseController::class);
+```
+
 From here you can build Blade layouts that pull in the copied assets to render the dashboard inside Laravel.
