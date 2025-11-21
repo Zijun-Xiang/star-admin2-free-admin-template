@@ -9,10 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('species')->nullable();
-            $table->unsignedInteger('age')->nullable();
+            $table->bigIncrements('PetID');
+            $table->string('Name');
+            $table->integer('Age')->nullable();
+            $table->string('Street')->nullable();
+            $table->string('City')->nullable();
+            $table->string('ZipCode', 10)->nullable();
+            $table->string('State', 50)->nullable();
+            $table->string('TypeofPet')->nullable();
             $table->timestamps();
         });
     }
