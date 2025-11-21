@@ -113,3 +113,53 @@ Route::resource('purchases', PurchaseController::class);
 ```
 
 From here you can build Blade layouts that pull in the copied assets to render the dashboard inside Laravel.
+
+<h3>Sample Blade layout</h3>
+
+Drop the template assets into `public/assets` (as described above), then create a layout such as `resources/views/layouts/app.blade.php` to load the CSS/JS bundles and provide a slot for your page content:
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pets Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{-- Star Admin 2 CSS --}}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/feather/feather.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+</head>
+<body>
+<div class="container-scroller">
+    {{-- Optional navbar/sidebar pulled from your own partials --}}
+    @include('partials.navbar')
+    <div class="container-fluid page-body-wrapper">
+        @include('partials.sidebar')
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
+            {{-- footer --}}
+        </div>
+    </div>
+</div>
+
+{{-- Star Admin 2 JS --}}
+<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+<script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+<script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+<script src="{{ asset('assets/js/template.js') }}"></script>
+</body>
+</html>
+```
+
+With this layout in place, any page that extends `layouts.app` will render inside the Star Admin 2 shell while pulling in your own navbar and sidebar partials.
