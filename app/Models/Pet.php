@@ -12,6 +12,8 @@ class Pet extends Model
     use HasFactory;
 
     protected $primaryKey = 'PetID';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'Name',
@@ -28,6 +30,11 @@ class Pet extends Model
         return $this->belongsToMany(Owner::class, 'owns', 'PetID', 'OID')
             ->withPivot('Year', 'PetAgeatOwnership', 'PricePaid')
             ->withTimestamps();
+    }
+
+    public function owns(): HasMany
+    {
+        return $this->hasMany(Own::class, 'PetID', 'PetID');
     }
 
     public function likes(): HasMany
