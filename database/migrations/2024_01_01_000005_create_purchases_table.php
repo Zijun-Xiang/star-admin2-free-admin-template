@@ -9,14 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('owner_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('food_id')->constrained()->cascadeOnDelete();
-            $table->unsignedInteger('quantity')->default(1);
-            $table->timestamp('purchased_at')->useCurrent();
+            $table->unsignedBigInteger('OID');
+            $table->unsignedBigInteger('FoodID');
+            $table->unsignedBigInteger('PetID');
+            $table->integer('Month');
+            $table->integer('Year');
+            $table->integer('Quantity')->default(1);
             $table->timestamps();
 
-            $table->index('purchased_at');
+            $table->primary(['OID', 'FoodID', 'PetID', 'Month', 'Year']);
+            $table->foreign('OID')->references('OID')->on('owners')->onDelete('cascade');
+            $table->foreign('FoodID')->references('FoodID')->on('foods')->onDelete('cascade');
+            $table->foreign('PetID')->references('PetID')->on('pets')->onDelete('cascade');
         });
     }
 
