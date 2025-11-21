@@ -33,4 +33,26 @@ class Own extends Model
     {
         return $this->belongsTo(Owner::class, 'OID', 'OID');
     }
+
+    public function getRouteKey(): string
+    {
+        return implode('-', [$this->PetID, $this->Year, $this->OID]);
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        [$petId, $year, $ownerId] = explode('-', $value) + [null, null, null];
+
+        return $this->where('PetID', $petId)
+            ->where('Year', $year)
+            ->where('OID', $ownerId)
+            ->firstOrFail();
+    }
+
+    protected function setKeysForSaveQuery($query)
+    {
+        return $query->where('PetID', $this->getOriginal('PetID'))
+            ->where('Year', $this->getOriginal('Year'))
+            ->where('OID', $this->getOriginal('OID'));
+    }
 }

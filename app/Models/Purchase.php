@@ -39,4 +39,30 @@ class Purchase extends Model
     {
         return $this->belongsTo(Pet::class, 'PetID', 'PetID');
     }
+
+    public function getRouteKey(): string
+    {
+        return implode('-', [$this->OID, $this->FoodID, $this->PetID, $this->Month, $this->Year]);
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        [$ownerId, $foodId, $petId, $month, $year] = explode('-', $value) + [null, null, null, null, null];
+
+        return $this->where('OID', $ownerId)
+            ->where('FoodID', $foodId)
+            ->where('PetID', $petId)
+            ->where('Month', $month)
+            ->where('Year', $year)
+            ->firstOrFail();
+    }
+
+    protected function setKeysForSaveQuery($query)
+    {
+        return $query->where('OID', $this->getOriginal('OID'))
+            ->where('FoodID', $this->getOriginal('FoodID'))
+            ->where('PetID', $this->getOriginal('PetID'))
+            ->where('Month', $this->getOriginal('Month'))
+            ->where('Year', $this->getOriginal('Year'));
+    }
 }
